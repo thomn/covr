@@ -5,14 +5,16 @@ import type {Env} from '#/types';
  *
  */
 const factory = () => {
-    let env: Env;
+    let env: any;
 
     return async (): Promise<Partial<Env>> => {
         if (env) {
             return env;
         }
 
-        return await sevl<Env>();
+        env = await sevl<Env>();
+
+        return env || {};
     };
 };
 
