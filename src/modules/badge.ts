@@ -5,26 +5,34 @@ const PADDING = 5;
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 const TABLE = 'AADqDqDqDqDqDqDqAAD3D3D3D3D3DqDqDqDqDqDqDqDqDqDqDqDqDqDqDqAADqDqD3EVFDJAG/L1H/C9E/E/G/JAEAE/EAE/G/G/G/G/G/G/G/G/G/G/E/E/JAJAJAF/LAHhHiHrIeG9GUIhIREoFAHnGHJRIOIqGoIqHpHhGxIDHhK4HiGxHiE/E/E/JAG/G/GmG2FuG2GjD3G2G9DBDyGgDBKsG9GrG2G2EsFuEVG9GgJAGgGgFxG+E/G+JAAA';
 
+const base64codes = {};
+for (let i = 0; i < CHARS.length; i++) {
+    base64codes[CHARS[i]] = i;
+}
+
 /**
  *
  * @param key
  * @param value
  * @param color
+ * @param padding
+ * @param theme
  */
-const factory = ({key, value, color = '#4c1'}) => {
-    const base64codes = {};
-    for (let index = 0; index < CHARS.length; index++) {
-        base64codes[CHARS[index]] = index;
-    }
-
+const factory = ({
+    key,
+    value,
+    color = '#4c1',
+    padding = PADDING,
+    theme = 'flat',
+}) => {
     /**
      *
      * @param str
      */
     const base64ToFloat = (str: string): number => {
         const integer = base64codes[str[0]];
-        const fract64 = base64codes[str[1]];
-        const fractional = fract64 / 64;
+        const fractal64 = base64codes[str[1]];
+        const fractional = fractal64 / 64;
 
         return integer + fractional;
     };
@@ -58,12 +66,12 @@ const factory = ({key, value, color = '#4c1'}) => {
     const rightWidth = calculateWidth(value);
 
     const resources = resolve(process.cwd(), 'src/resources');
-    const file = resolve(resources, 'badges/flat.svg');
+    const file = resolve(resources, `badges/${theme}.svg`);
 
     return renderer(file).render({
         leftWidth: Math.ceil(leftWidth),
         rightWidth: Math.ceil(rightWidth),
-        padding: PADDING,
+        padding,
         key,
         value,
         color,
