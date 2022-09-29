@@ -1,6 +1,7 @@
 import route from '#/route';
 import {Coverage} from '#/models';
 import {badge} from '#/modules';
+import {getSeverityColor} from '#/utils';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>
@@ -16,10 +17,11 @@ export default route(async ({context}) => {
 
     const key = 'coverage';
     const value = String((entry.coverage * 100).toFixed(0)) + '%';
+    const color = getSeverityColor((entry.coverage - 1) * -1);
 
     return badge({
         key,
         value,
-        color: '#4c1',
+        color,
     });
 });
