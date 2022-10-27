@@ -2,7 +2,7 @@ FROM node:16 as builder
 
 ADD . /app
 WORKDIR /app
-RUN --mount=type=cache,target=/cache npm ci
+RUN npm ci
 RUN npm run test
 
 # ---
