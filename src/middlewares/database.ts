@@ -6,7 +6,7 @@ import {set} from '#/di';
  *
  */
 const factory = async (dsn: string): Promise<Middleware> => {
-    const instance = database(dsn).init();
+    const instance = database().init(dsn);
 
     return (req, res, next) => {
         set('db', instance);

@@ -1,20 +1,26 @@
-import {connect} from 'mongoose';
+import {connect, connection, STATES} from 'mongoose';
 
 /**
  *
- * @param dsn
  */
-const factory = (dsn: string) => {
+const factory = () => {
+    /**
+     *
+     */
+    const init = (dsn: string) => {
+        return connect(dsn);
+    };
 
     /**
      *
      */
-    const init = () => {
-        return connect(dsn);
+    const status = () => {
+        return STATES[connection.readyState];
     };
 
     return {
         init,
+        status,
     };
 };
 
