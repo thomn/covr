@@ -1,5 +1,5 @@
 import route from '#/route';
-import {Coverage} from '#/models';
+import {getLatestCoverageBySemVer} from '#/models';
 import {badge} from '#/modules';
 import {getSeverityColor} from '#/utils';
 
@@ -10,7 +10,7 @@ import {getSeverityColor} from '#/utils';
  */
 export default route(async ({context}) => {
     const req = context.getParam<{ org: string, project: string, build: string }>();
-    const entry = await Coverage.findOne(req);
+    const entry = await getLatestCoverageBySemVer(req);
     if (!entry) {
         return null;
     }
