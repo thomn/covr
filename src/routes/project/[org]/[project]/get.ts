@@ -1,5 +1,5 @@
 import route from '#/route';
-import {getLatestCoverageBySemVer} from '#/models/';
+import {getLatestCoverageBySemVer} from '#/models';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>

@@ -1,5 +1,5 @@
 import route from '#/route';
-import {getLatestCoverageByDate} from '#/models/';
+import {getLatestCoverageByDate} from '#/models';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>
