@@ -63,17 +63,14 @@ const CoverageModel: Model<ICoverage> = model<ICoverage>('coverage', CoverageSch
  *
  * @param req
  */
-export const getLatestCoverageByDate = async (req: { org?: string, project?: string, build?: string }) => {
-    const query = {
+export const getLatestCoverageByDate = async (req: { org?: string, project?: string, build?: string }) => (
+    CoverageModel.findOne({
         org: req.org,
         project: req.project,
         build: parseBuild(req.build),
-    };
-
-    return CoverageModel.findOne(query)
+    })
         .sort({_id: -1})
-    ;
-};
+);
 
 /**
  *
@@ -82,6 +79,22 @@ export const getLatestCoverageByDate = async (req: { org?: string, project?: str
 export const getLatestCoverageBySemVer = async (query: { org?: string, project?: string, build?: string }) => (
     CoverageModel.findOne(query)
         .sort({'build.major': -1, 'build.minor': -1, 'build.patch': -1})
+);
+
+/**
+ *
+ * @param query
+ */
+export const getProjectsByOrg = async (query: { org: string }) => (
+    CoverageModel.find(query)
+        .distinct('project')
+);
+
+/**
+ *
+ */
+export const getOrgs = async () => (
+    CoverageModel.distinct('org')
 );
 
 /**
