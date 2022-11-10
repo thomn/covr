@@ -10,14 +10,15 @@ import {getSeverityColor} from '#/utils';
  */
 export default route(async ({context}) => {
     const req = context.getParam<{ org: string, project: string, build: string }>();
-    const entry = await getLatestCoverageBySemVer(req);
-    if (!entry) {
-        return null;
-    }
-
     const key = 'coverage';
-    const value = String((entry.coverage * 100).toFixed(0)) + '%';
-    const color = getSeverityColor((entry.coverage - 1) * -1);
+    let value = 'n/a';
+    let color = getSeverityColor(1);
+
+    const entry = await getLatestCoverageBySemVer(req);
+    if (entry) {
+        value = String((entry.coverage * 100).toFixed(0)) + '%';
+        color = getSeverityColor((entry.coverage - 1) * -1);
+    }
 
     return badge({
         key,
