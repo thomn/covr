@@ -1,6 +1,6 @@
 {
   "name": "@thomann/covr",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "code coverage history repository",
   "main": "index.js",
   "scripts": {
