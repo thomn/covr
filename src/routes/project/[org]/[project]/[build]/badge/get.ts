@@ -1,7 +1,6 @@
 import route from '#/route';
 import {getLatestCoverageByDate} from '#/models';
-import {badge} from '#/modules';
-import {getSeverityColor} from '#/utils';
+import coverage from '#/modules/badge/coverage';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>
@@ -10,19 +9,10 @@ import {getSeverityColor} from '#/utils';
  */
 export default route(async ({context}) => {
     const req = context.getParam<{ org: string, project: string, build: string }>();
-    const key = 'coverage';
-    let value = 'n/a';
-    let color = getSeverityColor(1);
-
     const entry = await getLatestCoverageByDate(req);
-    if (entry) {
-        value = String((entry.coverage * 100).toFixed(0)) + '%';
-        color = getSeverityColor((entry.coverage - 1) * -1);
+    if (!entry) {
+        return coverage();
     }
 
-    return badge({
-        key,
-        value,
-        color,
-    });
+    return coverage(entry);
 });
