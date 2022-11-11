@@ -76,9 +76,14 @@ export const getLatestCoverageByDate = async (req: { org?: string, project?: str
  *
  * @param query
  */
-export const getLatestCoverageBySemVer = async (query: { org?: string, project?: string}) => (
+export const getLatestCoverageBySemVer = async (query: { org?: string, project?: string }) => (
     CoverageModel.findOne(query)
-        .sort({'build.major': -1, 'build.minor': -1, 'build.patch': -1})
+        .sort({
+            'build.major': -1,
+            'build.minor': -1,
+            'build.patch': -1,
+            _id: -1,
+        })
 );
 
 /**
