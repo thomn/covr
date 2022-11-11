@@ -85,6 +85,32 @@ export const getLatestCoverageBySemVer = async (query: { org?: string, project?:
  *
  * @param query
  */
+export const getLatestCoveragesByOrg = async (query: { org?: string }) => (
+    CoverageModel.aggregate([
+        {
+            $match: query,
+        },
+        {
+            $sort: {
+                'build.major': -1,
+                'build.minor': -1,
+                'build.patch': -1,
+                _id: -1,
+            },
+        },
+        {
+            $group: {
+                '_id': '$project',
+                coverage: {$first: '$coverage'},
+            },
+        },
+    ])
+);
+
+/**
+ *
+ * @param query
+ */
 export const getProjectsByOrg = async (query: { org: string }) => (
     CoverageModel.find(query)
         .distinct('project')
