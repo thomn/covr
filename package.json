@@ -1,6 +1,6 @@
 {
   "name": "@thomann/covr",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "code coverage history repository",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "conr": "^0.1.6",
     "fdex": "^0.1.2",
     "fsbr": "^1.0.11",
-    "mongoose": "^6.7.1",
+    "mongoose": "^6.7.2",
     "sevl": "^0.1.7",
     "teda": "^0.1.6",
     "ts-node": "^10.9.1",
@@ -29,13 +29,13 @@
     "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "@sentry/node": "^7.17.4",
+    "@sentry/node": "^7.19.0",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.11.9",
     "@types/supertest": "^2.0.12",
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "@typescript-eslint/parser": "^5.42.0",
-    "eslint": "8.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "8.27.0",
     "mocha": "^10.1.0",
     "nyc": "^15.1.0",
     "supertest": "^6.3.1"
