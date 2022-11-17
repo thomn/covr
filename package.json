@@ -20,18 +20,11 @@
     "packages/*"
   ],
   "dependencies": {
-    "conr": "^0.1.6",
-    "fdex": "^0.1.2",
-    "fsbr": "^1.0.11",
-    "mongoose": "^6.7.2",
-    "sevl": "^0.1.7",
-    "teda": "^0.1.6",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "@sentry/node": "^7.19.0",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.11.9",
     "@types/supertest": "^2.0.12",
