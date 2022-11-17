@@ -65,7 +65,7 @@ const factory = ({
     const leftWidth = calculateWidth(key);
     const rightWidth = calculateWidth(value);
 
-    const resources = resolve(process.cwd(), '..', 'resources');
+    const resources = resolve(process.cwd(), 'resources');
     const file = resolve(resources, `badges/${theme}.svg`);
 
     return renderer(file).render({
