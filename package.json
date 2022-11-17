@@ -14,7 +14,7 @@
     "email": "oleg.kamlowski@thomann.de",
     "url": "https://thomann.de"
   },
-  "license": "ISC",
+  "license": "Apache-2.0",
   "workspaces": [
     "apps/*",
     "packages/*"
