@@ -12,14 +12,12 @@ import {name, version} from '../../package.json';
  * Time: 11:32
  */
 export default async () => {
-    const {PORT} = await config();
+    const {PORT, DEBUG, MONGODB_DSN} = await config();
 
     /**
      *
      */
     const router = async () => {
-        const {DEBUG, MONGODB_DSN} = await config();
-
         const {register, route, use} = fsbr({
             ext: '.ts',
             dev: JSON.parse(DEBUG || 'false'),
