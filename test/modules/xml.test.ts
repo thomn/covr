@@ -1,6 +1,6 @@
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
-import {xml} from '../../src/modules';
+import {xml} from '../../packages/backend/modules';
 import assert from 'assert';
 
 describe('covr', () => {

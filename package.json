@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "tsc --project tsconfig.prod.json",
-    "watch": "tsc --watch",
     "coverage": "nyc npm test",
     "test": "mocha -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'test/**/*.ts'",
     "test:watch": "mocha -w"
@@ -17,6 +15,10 @@
     "url": "https://thomann.de"
   },
   "license": "ISC",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "dependencies": {
     "conr": "^0.1.6",
     "fdex": "^0.1.2",

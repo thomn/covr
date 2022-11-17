@@ -1,6 +1,6 @@
 import {join} from 'path';
 import assert from 'assert';
-import {renderer} from '../../src/modules';
+import {renderer} from '../../packages/backend/modules';
 
 describe('covr', () => {
     describe('renderer', () => {

@@ -11,5 +11,5 @@ require('ts-node').register({
 
 process.chdir(cwd);
 
-const {default: service} = require('./src/index');
+const {default: service} = require('./apps/covr');
 service().catch(console.error);

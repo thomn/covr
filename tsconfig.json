@@ -7,27 +7,30 @@
     "target": "esnext",
     "moduleResolution": "Node",
     "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": "src",
-    "jsx": "react",
     "paths": {
       "*": [
         "node_modules/*"
       ],
-      "#/*": [
-        "./*"
+      "#/frontend/*": [
+        "./packages/frontend/*"
+      ],
+      "#/backend/*": [
+        "./packages/backend/*"
+      ],
+      "#/app/*": [
+        "./app/covr/*"
       ]
     },
     "declaration": true,
-    "declarationDir": "types"
   },
   "exclude": [
-    "test/**"
+    "./**/test/*"
   ],
   "lib": [
     "ESNext"
   ],
   "include": [
-    "src/**/*"
+    "./apps/**/*",
+    "./packages/**/*"
   ]
 }
