@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "react",
+      "styled-components"
+    ],
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ],
+      "#/frontend/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "./*"
+  ]
+}

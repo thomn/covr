@@ -22,6 +22,7 @@
       ]
     },
     "declaration": true,
+    "jsx": "react"
   },
   "exclude": [
     "./**/test/*"
