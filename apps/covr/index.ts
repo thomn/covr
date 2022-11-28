@@ -18,7 +18,7 @@ export default async () => {
      *
      */
     const router = async () => {
-        const {register, route, use} = fsbr({
+        const {register, route, use, on} = fsbr({
             ext: '.ts',
             dev: JSON.parse(DEBUG || 'false'),
         });
@@ -28,6 +28,14 @@ export default async () => {
         use(await container());
         use(await context());
         use(await database(MONGODB_DSN));
+
+        on('OPTIONS', '*', (req, res) => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+            res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+            return res.end();
+        });
 
         const path = resolve(__dirname, 'routes');
         await register(path);
