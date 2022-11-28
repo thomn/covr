@@ -4,10 +4,7 @@
   "description": "code coverage history repository",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "coverage": "nyc npm test",
-    "test": "mocha -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'test/**/*.ts'",
-    "test:watch": "mocha -w"
+    "start": "node index.js"
   },
   "author": {
     "name": "Oleg Kamlowski",

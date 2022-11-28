@@ -3,11 +3,11 @@
     ".ts"
   ],
   "include" :[
-    "src/**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "dist",
-    "test",
+    "tests",
     "**/*.d.ts"
   ],
   "reporter": [

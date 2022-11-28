@@ -1,5 +1,10 @@
 {
   "name": "backend",
+  "scripts": {
+    "coverage": "nyc npm test",
+    "test": "mocha -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'tests/**/*.ts'",
+    "test:watch": "mocha -w"
+  },
   "dependencies": {
     "conr": "^0.1.6",
     "fdex": "^0.1.2",

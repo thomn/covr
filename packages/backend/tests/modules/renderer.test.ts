@@ -1,10 +1,10 @@
 import {join} from 'path';
 import assert from 'assert';
-import {renderer} from '../../packages/backend/modules';
+import {renderer} from '../../modules';
 
 describe('covr', () => {
     describe('renderer', () => {
-        const file = join(process.cwd(), '/test/fixtures/vector.svg');
+        const file = join(process.cwd(), '/tests/fixtures/vector.svg');
 
         it('should render badge', (done) => {
             const {render} = renderer(file);

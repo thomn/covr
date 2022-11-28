@@ -1,7 +1,7 @@
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import assert from 'assert';
-import {clover} from '../../packages/backend/modules';
+import {clover} from '../../modules';
 
 describe('covr', () => {
     describe('clover', () => {
