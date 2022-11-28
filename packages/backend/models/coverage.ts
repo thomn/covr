@@ -1,5 +1,5 @@
 import {Document, model, Schema, Model} from 'mongoose';
-import {parseBuild} from '#/backend/utils';
+import {build} from '#/backend/modules';
 
 export interface ICoverage extends Document {
     org: string,
@@ -67,7 +67,7 @@ export const getLatestCoverageByDate = async (req: { org?: string, project?: str
     CoverageModel.findOne({
         org: req.org,
         project: req.project,
-        build: parseBuild(req.build),
+        build: build(req.build).parse(),
     })
         .sort({_id: -1})
 );
