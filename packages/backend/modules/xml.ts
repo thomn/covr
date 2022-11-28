@@ -1,16 +1,14 @@
-import type {Node, XML} from '#/backend/types/modules';
+import type {XML} from '#/backend/types/modules';
 
 const REGEX_ELEMENT = /<\/?[^>]+>/g;
 const REGEX_ATTR = /(\w+)="(.*?)"/g;
 const REGEX_TAG = /[.*]?([a-zA-Z0-9]+)/;
-const REGEX_LEAF = /.*\/>$/;
-const REGEX_END = /^<\/\w+>$/;
 
 /**
  *
  * @param clover
  */
-const factory = (clover: string) => {
+const factory = (clover: string): XML => {
     const string = clover.replace(/\r?\n|\r/g, '');
 
     //drop xml header
@@ -18,97 +16,67 @@ const factory = (clover: string) => {
 
     /**
      *
-     * @param value
-     * @param parent
+     * @param steps
      */
-    const node = (value, parent: Node = undefined): Node => ({
-        parent,
-        value,
-        children: [],
-    });
+    const iterate = (steps: string[]): Map<string, string> => {
+        let attributes: Map<string, string>;
+
+        while (steps.length) {
+            const [name, index] = steps.shift().split(':');
+
+            attributes = find(name, ~~index, 0);
+        }
+
+        return attributes;
+    };
 
     /**
      *
-     * @param context
+     * @param name
+     * @param index
+     * @param level
      */
-    const walk = (context: Node = node({tag: '#'})): Node => {
+    const find = (name: string, index: number, level = 0): Map<string, string> => {
         const matches = REGEX_ELEMENT.exec(string);
         if (!matches) {
-            return context;
+            return null;
         }
 
         const [element] = matches;
         const [tag] = REGEX_TAG.exec(element);
-        const attributes = Array.from(element.matchAll(REGEX_ATTR))
-            .reduce((acc, [, key, value]) => (
-                (acc.set(key, value)) && acc
-            ), new Map())
+
+        if (tag === name) {
+            if (index == level) {
+                return Array.from(element.matchAll(REGEX_ATTR))
+                    .reduce((acc, [, key, value]) => (
+                        (acc.set(key, value)) && acc
+                    ), new Map())
+                ;
+            } else if (index < level) {
+                return null;
+            }
+
+            ++level;
+        }
+
+        return find(name, index, level);
+    };
+
+    /**
+     *
+     * @param path
+     */
+    const pick = (path: string): Record<string, any> => {
+        const steps = path.split(/\/|(#)/)
+            .filter(Boolean)
         ;
 
-        if (REGEX_LEAF.test(element)) {
-            const leaf = node({tag, attributes}, context);
-            context.children.push(leaf);
-
-            return walk(context);
-        } else if (REGEX_END.test(element)) {
-            return walk(context.parent);
-        }
-
-        const child = node({tag, attributes}, context);
-        context.children.push(child);
-
-        return walk(child);
-    };
-
-    /**
-     *
-     * @param node
-     */
-    const defer = (node: Node) => {
-        delete node.parent;
-
-        for (const child of node.children) {
-            defer(child);
-        }
-    };
-
-    /**
-     *
-     */
-    const parse = (): XML => {
-        const node = walk();
-        defer(node);
-
-        /**
-         *
-         * @param path
-         */
-        const pick = (path) => (
-            path.split(/\/|(#)/)
-                .filter(Boolean)
-                .reduce((acc: Node, step: string) => {
-                    if (Array.isArray(acc)) {
-                        return acc[step];
-                    } else if (acc instanceof Map) {
-                        return acc.get(step);
-                    }
-
-                    if (step === '#') {
-                        return acc.value.attributes;
-                    }
-
-                    return acc.children.filter((node) => node.value.tag === step);
-                }, node)
-        );
-
-        return {
-            pick,
-            node,
-        };
+        return Array.from(iterate(steps))
+            .reduce((acc, [key, value]) => (acc[key] = value) && acc, {})
     };
 
     return {
-        parse,
+        pick,
     };
 };
 
