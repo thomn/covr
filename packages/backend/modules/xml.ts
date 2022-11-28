@@ -1,4 +1,5 @@
 import type {XML} from '#/backend/types/modules';
+import {pipe} from '#/backend/utils';
 
 const REGEX_ELEMENT = /<\/?[^>]+>/g;
 const REGEX_ATTR = /(\w+)="(.*?)"/g;
@@ -18,25 +19,44 @@ const factory = (clover: string): XML => {
      *
      * @param steps
      */
-    const iterate = (steps: string[]): Map<string, string> => {
+    const iterate = (steps: string[]): [string, string][] => {
         let attributes: Map<string, string>;
 
-        while (steps.length) {
-            const [name, index] = steps.shift().split(':');
+        /**
+         *
+         * @param element
+         */
+        const extract = (element: string) => pipe(
+            (element: string) => element.matchAll(REGEX_ATTR),
+            (matches: RegExpMatchArray[]) => Array.from(matches),
+            (matches: [string, string, string][]) => matches.map((entry) => entry.slice(1)),
+            (matches: Iterable<readonly [string, string]>) => new Map(matches),
+        )(element) as Map<string, string>;
 
-            attributes = find(name, ~~index, 0);
+        while (steps.length) {
+            const [name, index] = steps.shift()
+                .split(':')
+            ;
+
+            let iteration = 0;
+            do {
+                iteration = find(name, ~~index, iteration, (element) => {
+                    attributes = extract(element);
+                });
+            } while (iteration != undefined);
         }
 
-        return attributes;
+        return Array.from(attributes);
     };
 
     /**
      *
      * @param name
      * @param index
-     * @param level
+     * @param iteration
+     * @param callback
      */
-    const find = (name: string, index: number, level = 0): Map<string, string> => {
+    const find = (name: string, index: number, iteration = 0, callback: (element: string) => void): number => {
         const matches = REGEX_ELEMENT.exec(string);
         if (!matches) {
             return null;
@@ -46,34 +66,32 @@ const factory = (clover: string): XML => {
         const [tag] = REGEX_TAG.exec(element);
 
         if (tag === name) {
-            if (index == level) {
-                return Array.from(element.matchAll(REGEX_ATTR))
-                    .reduce((acc, [, key, value]) => (
-                        (acc.set(key, value)) && acc
-                    ), new Map())
-                ;
-            } else if (index < level) {
+            if (index === iteration) {
+                callback(element);
+
+                return null;
+            } else if (index < iteration) {
                 return null;
             }
 
-            ++level;
+            ++iteration;
         }
 
-        return find(name, index, level);
+        return iteration;
     };
 
     /**
      *
      * @param path
      */
-    const pick = (path: string): Record<string, any> => {
-        const steps = path.split(/\/|(#)/)
-            .filter(Boolean)
-        ;
-
-        return Array.from(iterate(steps))
-            .reduce((acc, [key, value]) => (acc[key] = value) && acc, {})
-    };
+    const pick = (path: string): Record<string, string> => (
+        pipe(
+            (path) => path.split(/\//),
+            (steps: string[]) => steps.filter(Boolean),
+            (steps: string[]) => iterate(steps),
+            (steps: [string, string][]) => steps.reduce((acc, [key, value]) => (acc[key] = value) && acc, {}),
+        )(path) as Record<string, string>
+    );
 
     return {
         pick,
