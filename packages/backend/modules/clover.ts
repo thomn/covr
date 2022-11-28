@@ -5,21 +5,22 @@ import {xml} from './index';
  * @param string
  */
 const factory = (string: string) => {
-    const {pick} = xml(string).parse();
+    const {pick} = xml(string);
 
     /**
      *
      */
     const coverage = (): number => {
-        const attr = pick('coverage/0/project/0/metrics/0#');
-        const coveredConditionals = ~~attr.get('coveredconditionals');
-        const coveredStatements = ~~attr.get('coveredstatements');
-        const coveredMethods = ~~attr.get('coveredmethods');
-        const conditionals = ~~attr.get('conditionals');
-        const statements = ~~attr.get('statements');
-        const methods = ~~attr.get('methods');
+        const {
+            coveredconditionals,
+            coveredstatements,
+            coveredmethods,
+            conditionals,
+            statements,
+            methods,
+        } = pick('coverage:0/project:0/metrics:0');
 
-        return (coveredConditionals + coveredStatements + coveredMethods) / (conditionals + statements + methods);
+        return (coveredconditionals + coveredstatements + coveredmethods) / (conditionals + statements + methods);
     };
 
     return {
