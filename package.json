@@ -4,7 +4,8 @@
   "description": "code coverage history repository",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "npm run test --workspace=backend"
   },
   "author": {
     "name": "Oleg Kamlowski",
