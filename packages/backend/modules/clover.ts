@@ -1,16 +1,22 @@
-import {xml} from './index';
+import {XMLParser} from 'fast-xml-parser';
+import {traverse} from '#/backend/utils';
 
 /**
  *
  * @param string
  */
 const factory = (string: string) => {
-    const {pick} = xml(string);
+    const parser = new XMLParser({
+        ignoreAttributes: false,
+        attributeNamePrefix: '',
+    });
 
     /**
      *
      */
     const coverage = (): number => {
+        const document = parser.parse(string);
+
         const {
             coveredconditionals,
             coveredstatements,
@@ -18,9 +24,16 @@ const factory = (string: string) => {
             conditionals,
             statements,
             methods,
-        } = pick('coverage:0/project:0/metrics:0');
+        } = traverse<{
+            coveredconditionals: string,
+            coveredstatements: string,
+            coveredmethods: string,
+            conditionals: string,
+            statements: string,
+            methods: string,
+        }>(document, 'coverage.project.metrics');
 
-        return (coveredconditionals + coveredstatements + coveredmethods) / (conditionals + statements + methods);
+        return (~~coveredconditionals + ~~coveredstatements + ~~coveredmethods) / (~~conditionals + ~~statements + ~~methods);
     };
 
     return {
