@@ -42,15 +42,6 @@ export default async () => {
         use(await context());
         use(await database(MONGODB_DSN));
 
-        on('OPTIONS', '*', (req, res) => {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-            res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-            return res.end();
-        });
-
-        const path = resolve(__dirname, 'routes');
         const path = resolve(root, 'routes');
         await register(path);
 
