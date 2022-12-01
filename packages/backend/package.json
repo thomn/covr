@@ -3,16 +3,16 @@
   "scripts": {
     "coverage": "nyc npm test",
     "test": "mocha -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'tests/**/*.ts'",
-    "test:watch": "mocha -w"
+    "test:watch": "mocha -w -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'tests/**/*.ts'"
   },
   "dependencies": {
+    "@sentry/node": "^7.19.0",
     "conr": "^0.1.6",
     "fast-xml-parser": "^4.0.12",
     "fdex": "^0.1.2",
     "fsbr": "^1.0.11",
     "mongoose": "^6.7.2",
     "sevl": "^0.1.7",
-    "teda": "^0.1.6",
-    "@sentry/node": "^7.19.0"
+    "teda": "^0.1.6"
   }
 }
