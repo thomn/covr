@@ -1,10 +1,13 @@
 import teda, {Format} from 'teda';
+import logger from '#/backend/logger';
 import type {Middleware} from '#/backend/types';
 
 /**
  *
  */
 const factory = async (): Promise<Middleware> => {
+    const log = logger('server');
+
     /**
      *
      * @param req
@@ -20,6 +23,7 @@ const factory = async (): Promise<Middleware> => {
 
     return teda(Format.DEFAULT, {
         skip,
+        adapter: log,
     });
 };
 

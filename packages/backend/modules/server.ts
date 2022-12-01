@@ -1,6 +1,7 @@
 import {createServer, IncomingMessage, Server, ServerResponse} from 'http';
 import {ReadStream, statSync} from 'fs';
 import {capture} from '#/backend/debug';
+import logger from '#/backend/logger';
 
 const ContentType = {
     TEXT: 'text/plain',
@@ -12,10 +13,10 @@ const ContentType = {
 
 /**
  *
- * @param name
- * @param version
  */
-const factory = (name: string, version: string) => {
+const factory = () => {
+    const log = logger('server');
+
     /**
      *
      * @param res
@@ -112,7 +113,7 @@ const factory = (name: string, version: string) => {
         const listen = async (port: string | number): Promise<void> => (
             new Promise((resolve) => (
                 server.listen(port, () => {
-                    console.info(`> ${name}:${version} listening on port ${port}`);
+                    log(`listening on port ${port}`);
 
                     resolve();
                 })

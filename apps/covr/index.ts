@@ -4,6 +4,8 @@ import {server} from '#/backend/modules';
 import config from '#/backend/config';
 import {capture} from '#/backend/debug';
 import {container, context, database, debug, logger, sinkhole} from '#/backend/middlewares';
+import log, {register} from '#/backend/logger'
+
 import {name, version} from '../../package.json';
 
 /**
@@ -12,6 +14,8 @@ import {name, version} from '../../package.json';
  * Time: 11:32
  */
 export default async () => {
+    register(name);
+    log('app')(`>>> ${version}`, 'BLUE');
     const {PORT, DEBUG, MONGODB_DSN} = await config();
 
     /**
@@ -45,7 +49,7 @@ export default async () => {
         return route;
     };
 
-    return server(name, version)
+    return server()
         .serve(await router())
         .listen(PORT)
         .catch((e) => capture(e))
