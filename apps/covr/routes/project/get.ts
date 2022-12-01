@@ -1,5 +1,5 @@
 import route from '#/backend/route';
-import {getOrgs} from '#/backend/models';
+import {getOrgs} from '#/covr/models';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>

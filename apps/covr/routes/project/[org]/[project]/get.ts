@@ -1,5 +1,5 @@
 import route from '#/backend/route';
-import {getLatestCoverageBySemVer} from '#/backend/models';
+import {getLatestCoverageBySemVer} from '#/covr/models';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>

@@ -17,11 +17,11 @@
       "#/backend/*": [
         "./packages/backend/*"
       ],
-      "#/app/*": [
-        "./app/covr/*"
+      "#/covr/*": [
+        "./apps/covr/*"
       ]
     },
-    "declaration": true,
+    "declaration": true
   },
   "exclude": [
     "./**/test/*"

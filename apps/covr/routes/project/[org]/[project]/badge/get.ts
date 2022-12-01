@@ -1,6 +1,6 @@
 import route from '#/backend/route';
-import {getLatestCoverageBySemVer} from '#/backend/models';
 import coverage from '#/backend/modules/badge/coverage';
+import {getLatestCoverageBySemVer} from '#/covr//models';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>

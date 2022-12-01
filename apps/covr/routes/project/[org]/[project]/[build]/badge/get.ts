@@ -1,6 +1,6 @@
 import route from '#/backend/route';
-import {getLatestCoverageByDate} from '#/backend/models';
 import coverage from '#/backend/modules/badge/coverage';
+import {getLatestCoverageByDate} from '#/covr/models';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>
