@@ -1,6 +1,7 @@
 import {Container} from '#/backend/types';
 
 type Platform = {
+    version: string,
 }
 
 declare global {

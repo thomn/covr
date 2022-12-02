@@ -6,7 +6,7 @@ import {database} from '#/backend/modules';
  * Date: 28.10.22
  * Time: 12:06
  */
-export default route(async () => {
+export default route<DI>(async ({version}) => {
     const memory = {};
     const used = process.memoryUsage();
     for (const key in used) {
@@ -14,6 +14,7 @@ export default route(async () => {
     }
 
     return ({
+        version,
         status: 'up',
         database: database().status(),
         uptime: process.uptime(),

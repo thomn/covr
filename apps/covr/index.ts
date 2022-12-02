@@ -40,7 +40,7 @@ export default async () => {
 
         use(await logger());
         use(await debug());
-        use(await container());
+        use(await container({version}));
         use(await context());
         use(await database(MONGODB_DSN));
 

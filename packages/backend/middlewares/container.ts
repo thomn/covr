@@ -4,10 +4,12 @@ import {set} from '#/backend/di';
 /**
  *
  */
-const factory = async (): Promise<Middleware> => {
+const factory = async ({version}: {version: string}): Promise<Middleware> => {
     return (req, res, next) => {
         set('req', req);
         set('res', res);
+
+        set('version', version);
 
         return next();
     };
