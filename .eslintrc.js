@@ -33,5 +33,8 @@ module.exports = {
             },
         ],
     },
-    ignorePatterns: ['test/*'],
+    ignorePatterns: [
+        '*.js',
+        'test/*',
+    ],
 };

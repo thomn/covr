@@ -2,10 +2,10 @@
   "name": "backend",
   "scripts": {
     "coverage": "nyc npm test",
-    "test": "mocha -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'tests/**/*.ts'",
-    "test:watch": "mocha -w -r tsconfig-paths/register -r ts-node/register/transpile-only --full-trace 'tests/**/*.ts'"
+    "test": "mocha -r tsconfig-paths/register -r ts-node/register/transpile-only 'tests/**/*.ts'",
+    "test:watch": "mocha -w -r tsconfig-paths/register -r ts-node/register/transpile-only 'tests/**/*.ts'"
   },
-  "dependencies": {
+  "devDependencies": {
     "@sentry/node": "^7.19.0",
     "conr": "^0.1.6",
     "fast-xml-parser": "^4.0.12",

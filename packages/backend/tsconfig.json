@@ -1,6 +1,14 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "./*"
-  ]
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ],
+      "#/backend/*": [
+        "./*"
+      ]
+    }
+  }
 }

@@ -1,4 +1,3 @@
-import {resolve} from 'path';
 import sevl from 'sevl';
 import type {Env} from './types';
 
@@ -14,11 +13,18 @@ const factory = () => {
         }
 
         env = await sevl<Env>({
-            cwd: resolve(__dirname, '..', '..'),
+            cwd: process.cwd(),
         });
 
         return env || {};
     };
+};
+
+/**
+ *
+ */
+export const isDev = (): boolean => {
+    return !!process[Symbol.for('ts-node.register.instance')];
 };
 
 /**

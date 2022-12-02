@@ -1,15 +1,8 @@
 #!/usr/bin/env node
-const cwd = process.cwd();
-process.chdir(__dirname);
 
-require('ts-node').register({
-    transpileOnly: true,
-    require: [
-        require.resolve('tsconfig-paths/register'),
-    ],
-});
+process.env.NODE_ENV = 'production';
 
-process.chdir(cwd);
-
-const {default: service} = require('./apps/covr');
-service().catch(console.error);
+require('./dist/apps/covr/index')
+    .default()
+    .catch()
+;

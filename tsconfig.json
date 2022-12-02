@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "module": "CommonJS",
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -7,10 +8,9 @@
     "target": "esnext",
     "moduleResolution": "Node",
     "sourceMap": true,
+    "rootDir": "./",
+    "outDir": "./dist",
     "paths": {
-      "*": [
-        "node_modules/*"
-      ],
       "#/frontend/*": [
         "./packages/frontend/*"
       ],
@@ -24,13 +24,11 @@
     "declaration": true
   },
   "exclude": [
-    "./**/test/*"
+    "index.js",
+    "./**/tests/*",
+    "./dist"
   ],
   "lib": [
     "ESNext"
-  ],
-  "include": [
-    "./apps/**/*",
-    "./packages/**/*"
   ]
 }

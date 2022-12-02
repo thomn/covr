@@ -1,7 +1,7 @@
 import {resolve} from 'path';
 import fsbr from 'fsbr';
 import {server} from '#/backend/modules';
-import config from '#/backend/config';
+import config, {isDev} from '#/backend/config';
 import {capture} from '#/backend/debug';
 import {
     container,
@@ -32,7 +32,9 @@ export default async () => {
      */
     const router = async () => {
         const {register, route, use} = fsbr({
-            ext: '.ts',
+            ext: isDev()
+                ? '.ts'
+                : '.js',
             dev: JSON.parse(DEBUG || 'false'),
         });
 
