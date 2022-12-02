@@ -1,11 +1,11 @@
 import {get, resolve} from './di';
-import type {Context, Resolvable} from './types';
+import type {Context, Resolve} from './types';
 
 /**
  *
  * @param fn
  */
-const factory: Resolvable = (fn) => {
+const factory = <T = object> (fn: Resolve<T>) => {
     return (req, res, param) => {
         const context = get<Context>('context');
         context.setParam(param);

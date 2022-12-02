@@ -1,12 +1,10 @@
 import {Context} from './Context';
-import type {Request} from 'fsbr';
+import type {Request, Response} from 'fsbr';
 
-export type Resolvable = (fn: (
-    {
-        context,
-        req,
-    }: Partial<{
-        context: Context,
-        req: Request
-    }>,
-) => Promise<unknown> | unknown) => unknown;
+export type Container = {
+    context: Context,
+    req: Request,
+    res: Response,
+}
+
+export type Resolve<T> = ((obj: Container & T) => Promise<unknown> | unknown);
