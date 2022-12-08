@@ -1,17 +1,11 @@
 import {resolve} from 'path';
 import fsbr from 'fsbr';
-import {server} from '#/backend/modules';
+import * as di from '#/backend/di';
+import {server, migration, database} from '#/backend/modules';
 import config, {isDev} from '#/backend/config';
 import {capture} from '#/backend/debug';
-import {
-    container,
-    context,
-    database,
-    debug,
-    logger,
-    sinkhole,
-} from '#/backend/middlewares';
-import log, {register} from '#/backend/logger'
+import {container, context, debug, logger, serve, sinkhole} from '#/backend/middlewares';
+import log, {register} from '#/backend/logger';
 
 import {name, version} from '../../package.json';
 
@@ -27,6 +21,9 @@ export default async () => {
     const {PORT, DEBUG, MONGODB_DSN} = await config();
     const root = resolve(__dirname);
 
+    await database().init(MONGODB_DSN);
+    await migration(root).sync();
+
     /**
      *
      */
@@ -40,21 +37,21 @@ export default async () => {
 
         use(await logger());
         use(await debug());
-        use(await container({version}));
+        use(await container(di, {version}));
+        use(await serve(root, ['storage']));
         use(await context());
-        use(await database(MONGODB_DSN));
 
-        const path = resolve(root, 'routes');
-        await register(path);
+        await register(resolve(root, 'routes'));
 
         use(await sinkhole());
 
         return route;
     };
 
-    return server()
-        .serve(await router())
-        .listen(PORT)
-        .catch((e) => capture(e))
-    ;
+    return di.run(async () => {
+        return server()
+            .serve(await router())
+            .listen(PORT)
+            .catch(capture);
+    });
 };

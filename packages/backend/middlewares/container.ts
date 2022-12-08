@@ -1,15 +1,18 @@
-import type {Middleware} from '#/backend/types';
-import {set} from '#/backend/di';
+import type {DI, Middleware} from '#/backend/types';
 
 /**
  *
+ * @param set
+ * @param props
  */
-const factory = async ({version}: {version: string}): Promise<Middleware> => {
+const factory = async ({set}: Pick<DI, 'set'>, props: Record<string, unknown>): Promise<Middleware> => {
+    for (const [key, value] of Object.entries(props)) {
+        set(key, value);
+    }
+
     return (req, res, next) => {
         set('req', req);
         set('res', res);
-
-        set('version', version);
 
         return next();
     };
