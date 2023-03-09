@@ -22,7 +22,9 @@ export default async () => {
     const root = resolve(__dirname);
 
     await database().init(MONGODB_DSN);
-    await migration(root).sync();
+    // const {sync, run} = migration(root);
+    // await sync();
+    // await run(version);
 
     /**
      *
