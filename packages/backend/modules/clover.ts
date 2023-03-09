@@ -1,5 +1,4 @@
 import {XMLParser} from 'fast-xml-parser';
-import {traverse} from '#/backend/utils';
 
 /**
  *
@@ -13,27 +12,48 @@ const factory = (string: string) => {
 
     /**
      *
+     * @param key
+     * @param subject
+     * @param collected
+     */
+    const collect = (key: string, subject: object, collected: object[] = []): object[] => {
+        for (const [_key, value] of Object.entries(subject)) {
+            if (key == _key) {
+                collected.push(value);
+            } else {
+                if (typeof value === 'object' && !Array.isArray(value)) {
+                    collect(key, value, collected);
+                }
+            }
+        }
+
+        return collected;
+    };
+
+    /**
+     *
      */
     const coverage = (): number => {
         const document = parser.parse(string);
+        const metrics = collect('metrics', document);
 
-        const {
-            coveredconditionals,
-            coveredstatements,
-            coveredmethods,
-            conditionals,
-            statements,
-            methods,
-        } = traverse<{
-            coveredconditionals: string,
-            coveredstatements: string,
-            coveredmethods: string,
-            conditionals: string,
-            statements: string,
-            methods: string,
-        }>(document, 'coverage.project.metrics');
+        let statements = 0;
+        let methods = 0;
+        let elements = 0;
+        let coveredStatements = 0;
+        let coveredMethods = 0;
+        let coveredElements = 0;
 
-        return (~~coveredconditionals + ~~coveredstatements + ~~coveredmethods) / (~~conditionals + ~~statements + ~~methods);
+        for (const metric of metrics) {
+            statements += parseInt(metric['statements']);
+            methods += parseInt(metric['methods']);
+            elements += parseInt(metric['elements']);
+            coveredStatements += parseInt(metric['coveredstatements']);
+            coveredMethods += parseInt(metric['coveredmethods']);
+            coveredElements += parseInt(metric['coveredelements']);
+        }
+
+        return (coveredStatements + coveredMethods + coveredElements) / (statements + methods + elements);
     };
 
     return {
