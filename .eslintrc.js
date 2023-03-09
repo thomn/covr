@@ -25,6 +25,7 @@ module.exports = {
         'object-curly-newline': ['warn', {'consistent': true}],
         'operator-linebreak': ['warn', 'before'],
         'padded-blocks': ['warn', 'never'],
+        '@typescript-eslint/no-var-requires': 0,
         'padding-line-between-statements': [
             'warn', {
                 blankLine: 'always',

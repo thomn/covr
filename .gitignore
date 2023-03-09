@@ -5,6 +5,8 @@
 node_modules
 coverage
 dist
+temp
+storage
 /types
 
 .DS_STORE
