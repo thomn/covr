@@ -1,7 +1,7 @@
 import {resolve} from 'path';
 import fsbr from 'fsbr';
 import * as di from '#/backend/di';
-import {server, migration, database} from '#/backend/modules';
+import {server, database} from '#/backend/modules';
 import config, {isDev} from '#/backend/config';
 import {capture} from '#/backend/debug';
 import {container, context, debug, logger, serve, sinkhole} from '#/backend/middlewares';

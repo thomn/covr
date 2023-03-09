@@ -2,7 +2,7 @@ import {resolve} from 'path';
 import {model} from 'mongoose';
 import {CoverageSchema} from '#/covr/models';
 import Artifact from '#/covr/models/Artifact';
-import {artifact, version} from '#/backend/modules';
+import {artifact, build} from '#/backend/modules';
 import {ICoverage} from '#/covr/models';
 
 type SurrogateType = ICoverage & {
@@ -21,20 +21,20 @@ export async function up () {
     const path = resolve(__dirname, '..', '..', '..');
     const outputs = artifact(path, 'outputs');
 
-    for (const coverage of coverages) {
-        coverage.version = version(coverage.build.complete).parse();
-
-        const document = outputs.link(coverage.document);
-        const entry = new Artifact({
-            type: 'xml',
-            reference: document,
-        });
-
-        coverage.output = entry._id;
-
-        await entry.save();
-        await coverage.save();
-    }
+    // for (const coverage of coverages) {
+    //     coverage.build = build(coverage.build.complete).parse();
+    //
+    //     const document = outputs.link(coverage.document);
+    //     const entry = new Artifact({
+    //         type: 'xml',
+    //         reference: document,
+    //     });
+    //
+    //     coverage.output = entry._id;
+    //
+    //     await entry.save();
+    //     await coverage.save();
+    // }
 
     // CoverageModel.updateMany({}, {$unset: {'document': 1}});
 }
