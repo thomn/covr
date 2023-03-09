@@ -1,14 +1,14 @@
-import {Build, Version} from '#/backend/types/modules';
+import {LegacyBuild, LegacyVersion} from '#/backend/types/modules';
 
 /**
  *
  * @param string
  */
-const factory = (string: string): Build => {
+const factory = (string: string): LegacyBuild => {
     /**
      *
      */
-    const parse = (): Version => {
+    const parse = (): LegacyVersion => {
         if (!string) {
             return null;
         }

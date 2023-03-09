@@ -1,1 +1,2 @@
-export * from './coverage';
+export * from './Artifact';
+export * from './Coverage';

@@ -63,6 +63,10 @@ const factory = (namespace: string) => {
      * @param background
      */
     return (message: string, foreground?: keyof typeof Foreground, background: keyof typeof Background = 'BLACK') => {
+        if (!instance.name) {
+            return;
+        }
+
         print(
             Foreground[foreground || getColor(namespace)],
             Background[background],

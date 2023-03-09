@@ -1,10 +1,10 @@
-export type Version = {
+export type LegacyVersion = {
     complete: string,
     major?: string,
     minor?: string,
     patch?: string
 };
 
-export type Build = {
-    parse (): Version,
+export type LegacyBuild = {
+    parse (): LegacyVersion,
 };

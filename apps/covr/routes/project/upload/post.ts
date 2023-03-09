@@ -1,6 +1,6 @@
 import route from '#/backend/route';
 import {clover, build} from '#/backend/modules';
-import Coverage from '#/covr/models/coverage';
+import Coverage from '#/covr/models/Coverage';
 
 /**
  * User: Oleg Kamlowski <oleg.kamlowski@thomann.de>

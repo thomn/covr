@@ -1,5 +1,6 @@
 import {Document, model, Schema, Model} from 'mongoose';
 import {build} from '#/backend/modules';
+import {LATEST} from '#/backend/models/utils';
 
 export interface ICoverage extends Document {
     org: string,
@@ -57,7 +58,7 @@ export const CoverageSchema = new Schema<ICoverage>({
     },
 });
 
-const CoverageModel: Model<ICoverage> = model<ICoverage>('coverage', CoverageSchema);
+export const CoverageModel: Model<ICoverage> = model<ICoverage>('coverage', CoverageSchema);
 
 /**
  *
@@ -69,7 +70,7 @@ export const getLatestCoverageByDate = async (req: { org?: string, project?: str
         project: req.project,
         build: build(req.build).parse(),
     })
-        .sort({_id: -1})
+        .sort({_id: LATEST})
 );
 
 /**
@@ -79,10 +80,10 @@ export const getLatestCoverageByDate = async (req: { org?: string, project?: str
 export const getLatestCoverageBySemVer = async (query: { org?: string, project?: string }) => (
     CoverageModel.findOne(query)
         .sort({
-            'build.major': -1,
-            'build.minor': -1,
-            'build.patch': -1,
-            _id: -1,
+            'build.major': LATEST,
+            'build.minor': LATEST,
+            'build.patch': LATEST,
+            _id: LATEST,
         })
 );
 
@@ -97,10 +98,10 @@ export const getLatestCoveragesByOrg = async (query: { org?: string }) => (
         },
         {
             $sort: {
-                'build.major': -1,
-                'build.minor': -1,
-                'build.patch': -1,
-                _id: -1,
+                'build.major': LATEST,
+                'build.minor': LATEST,
+                'build.patch': LATEST,
+                _id: LATEST,
             },
         },
         {
